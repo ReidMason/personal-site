@@ -1,15 +1,30 @@
 ---
+import SocialLinks from "../components/SocialLinks.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Reid Mason">
   <main class="w-full h-screen flex flex-col justify-center items-center">
-    <div class="flex flex-col items-center gap-2 mb-32">
+    <div class="flex flex-col items-center gap-2 mb-32 name-container">
       <h1 class="text-4xl font-semibold text-gray-50">Reid Mason</h1>
-      <a
-        class="text-blue-500 hover:underline hover:cursor-pointer text-xl"
-        href="https://github.com/ReidMason">GitHub</a
-      >
+      <SocialLinks />
     </div>
   </main>
 </Layout>
+
+<style>
+  .name-container {
+    animation: grow 300ms forwards cubic-bezier(0.57, 0.21, 0.69, 1.25);
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0px);
+    }
+  }
+</style>
