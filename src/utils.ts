@@ -1,3 +1,5 @@
+import { ROUTES } from "./consts";
+
 export const createBlogUrl = (slug: string) => {
-  return `/blogs/${slug}`;
+  return `${ROUTES.blog}/${slug}`;
 };

@@ -1,7 +1,9 @@
 ---
-import GitHubIcon from "../components/icons/GitHubIcon.astro";
-import LinkedInIcon from "../components/icons/LinkedInIcon.astro";
+import GitHubIcon from "./icons/GitHubIcon.astro";
+import LinkedInIcon from "./icons/LinkedInIcon.astro";
 import SocialLink from "../components/SocialLink.astro";
+import BlogIcon from "./icons/BlogIcon.astro";
+import { ROUTES } from "../consts";
 ---
 
 <div class="social-links flex origin-top gap-4">
@@ -15,6 +17,7 @@ import SocialLink from "../components/SocialLink.astro";
     href="https://www.linkedin.com/in/reid-mason-566800139/"
     Icon={LinkedInIcon}
   />
+  <SocialLink text="Blog" href={ROUTES.blog} Icon={BlogIcon} />
 </div>
 
 <style>

@@ -1,9 +1,10 @@
 ---
 import { getCollection, CollectionEntry } from "astro:content";
+import { ROUTES } from "../../consts";
 import Layout from "../../layouts/Layout.astro";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blogs");
+  const posts = await getCollection("blog");
   return posts.map((post) => {
     return {
       params: { slug: post.slug },
@@ -15,7 +16,7 @@ export async function getStaticPaths() {
 }
 
 interface Props {
-  post: CollectionEntry<"blogs">;
+  post: CollectionEntry<"blog">;
 }
 
 const { post } = Astro.props;
@@ -24,7 +25,7 @@ const { Content } = await post.render();
 
 <Layout title={post.data.title}>
   <main class="flex flex-col items-center">
-    <a class="text-blue-500 underline" href="/blogs">Blogs</a>
+    <a class="text-blue-500 underline" href={ROUTES.blog}>Blog</a>
     <article class="prose prose-slate dark:prose-invert">
       <Content />
     </article>
