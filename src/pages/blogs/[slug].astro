@@ -23,7 +23,8 @@ const { Content } = await post.render();
 ---
 
 <Layout title={post.data.title}>
-  <main class="flex flex-col justify-center">
+  <main class="flex flex-col items-center">
+    <a class="text-blue-500 underline" href="/blogs">Blogs</a>
     <article class="prose prose-slate dark:prose-invert">
       <Content />
     </article>
