@@ -1,6 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { createBlogUrl } from "../utils";
+import { createBlogUrl, formatDate } from "../utils";
 
 export interface Props {
   blog: CollectionEntry<"blog">;
@@ -10,14 +10,22 @@ const { blog } = Astro.props;
 ---
 
 <div
-  class="flex flex-col gap-4 rounded-xl border border-slate-500 p-4 text-gray-50"
+  class="rounded-lg border border-slate-500 bg-slate-700/50 p-4 text-gray-50"
 >
-  <a
-    class="cursor-pointer text-xl font-semibold transition-colors hover:text-blue-500 hover:underline"
-    href={createBlogUrl(blog.slug)}>{blog.data.title}</a
-  >
-  <p>{blog.data.description}</p>
-  <a class="text-blue-500 underline" href={createBlogUrl(blog.slug)}
-    ><small>Read more...</small>
-  </a>
+  <div class="flex flex-col gap-2">
+    <a
+      class="test cursor-pointer text-xl font-semibold transition-colors hover:text-blue-400 hover:underline"
+      href={createBlogUrl(blog.slug)}>{blog.data.title}</a
+    >
+    <small class="text-gray-50/60">{formatDate(blog.data.date)}</small>
+  </div>
+  <hr class="mb-4 border-slate-500 bg-slate-500" />
+  <div class="flex flex-col">
+    <p>{blog.data.description}</p>
+    <a
+      class="self-end text-blue-500/90 underline transition-colors hover:text-blue-400"
+      href={createBlogUrl(blog.slug)}
+      ><small>Read more...</small>
+    </a>
+  </div>
 </div>
