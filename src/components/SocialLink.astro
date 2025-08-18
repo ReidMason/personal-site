@@ -1,0 +1,13 @@
+---
+import Link from "./Link.astro";
+const { href, text, Icon } = Astro.props;
+---
+
+<Link href={href}>
+  <div class="flex gap-1 items-center">
+    <Icon
+      className="text-gray-400 group-hover:text-gray-200 transition-colors h-6 w-6"
+    />
+    <span>{text}</span>
+  </div>
+</Link>
