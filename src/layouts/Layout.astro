@@ -12,7 +12,7 @@ const { title } = Astro.props;
 <!doctype html>
 <html
   lang="en"
-  class="before:content-[''] before:fixed before:top-0 before:left-0 before:w-full before:h-screen before:bg-gradient-to-br before:from-slate-800 before:to-slate-900 before:-z-10"
+  class="before:fixed before:top-0 before:left-0 before:-z-10 before:h-screen before:w-full before:bg-gradient-to-br before:from-slate-800 before:to-slate-900 before:content-['']"
 >
   <head>
     <meta charset="UTF-8" />
@@ -23,7 +23,7 @@ const { title } = Astro.props;
   </head>
   <body class="h-screen">
     <Navbar />
-    <main class="pt-16 h-full">
+    <main class="h-full pt-16">
       <slot />
     </main>
   </body>

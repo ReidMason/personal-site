@@ -4,9 +4,9 @@ const { href, text, Icon } = Astro.props;
 ---
 
 <Link href={href}>
-  <div class="flex gap-1 items-center">
+  <div class="flex items-center gap-1">
     <Icon
-      className="text-gray-400 group-hover:text-gray-200 transition-colors h-6 w-6"
+      className="h-6 w-6 text-gray-400 transition-colors group-hover:text-gray-200"
     />
     <span>{text}</span>
   </div>
