@@ -13,23 +13,20 @@ interface PhotoGalleryProps {
 export default function PhotoGallery(props: PhotoGalleryProps) {
   const [selectedImage, setSelectedImage] = createSignal<number | null>(null);
 
-  // Keyboard navigation is now handled in LightboxModal
-
   const openImage = (index: number) => {
     setSelectedImage(index);
   };
 
   return (
     <>
-      {/* Gallery Grid */}
-      <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div class="columns-1 gap-6 md:columns-2 lg:columns-3">
         <For each={props.photos}>
           {(photo, index) => (
-            <div class="group relative overflow-hidden rounded-lg bg-gray-800 shadow-lg transition-transform duration-300 hover:scale-105">
+            <div class="group relative mb-6 break-inside-avoid overflow-hidden rounded-lg bg-gray-800 shadow-lg transition-transform duration-300 hover:scale-103">
               <img
                 src={photo.src}
                 alt="Photography"
-                class="h-64 w-full cursor-pointer object-cover transition-opacity duration-300 group-hover:opacity-90"
+                class="block w-full cursor-pointer object-cover transition-opacity duration-300 group-hover:opacity-90"
                 loading="lazy"
                 onClick={() => openImage(index())}
                 onKeyDown={(e) => {
