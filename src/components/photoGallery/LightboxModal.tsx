@@ -1,6 +1,6 @@
 import type { Accessor, JSX } from "solid-js";
 import type { Photo } from "./PhotoGallery";
-import { createSignal, createEffect } from "solid-js";
+import { createSignal, createEffect, onCleanup } from "solid-js";
 
 interface LightboxModalProps {
   photos: Photo[];
@@ -15,7 +15,11 @@ export default function LightboxModal({
 }: LightboxModalProps) {
   const [isClosing, setIsClosing] = createSignal(false);
 
-  // Keyboard navigation
+  onCleanup(() => {
+    document.body.style.overflow = "auto";
+  });
+
+  // Keyboard navigation and body scroll lock
   createEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (isClosing()) return; // Don't handle keys during closing animation
@@ -40,14 +44,14 @@ export default function LightboxModal({
 
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "auto";
     };
   });
 
   const closeImage = () => {
     if (isClosing()) return; // Prevent multiple close calls during animation
     setIsClosing(true);
-    // Wait for animation to complete before actually closing
+    document.body.style.overflow = "auto";
+
     setTimeout(() => {
       setSelectedImage(null);
       setIsClosing(false);
