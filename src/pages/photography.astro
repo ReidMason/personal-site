@@ -1,0 +1,55 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PhotoGallery from "../components/photoGallery/PhotoGallery.tsx";
+import fs from "fs";
+import path from "path";
+
+// Dynamically read all images from the photography directory
+const photographyDir = path.join(
+  process.cwd(),
+  "public",
+  "images",
+  "photography",
+);
+const imageFiles = fs
+  .readdirSync(photographyDir)
+  .filter((file) => {
+    // Filter for common image extensions
+    const ext = path.extname(file).toLowerCase();
+    return [".jpg", ".jpeg", ".png", ".webp", ".gif"].includes(ext);
+  })
+  .sort(); // Sort alphabetically for consistent ordering
+
+// Create photo objects for the component
+const photos = imageFiles.map((filename) => ({
+  filename,
+  src: `/images/photography/${filename}`,
+}));
+---
+
+<Layout title="Photography">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="mb-8 text-center text-4xl font-bold text-gray-50">
+      Photography
+    </h1>
+
+    <PhotoGallery photos={photos} client:load />
+  </div>
+</Layout>
+
+<style>
+  .container {
+    animation: fadeIn 0.6s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
