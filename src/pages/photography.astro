@@ -52,4 +52,23 @@ const photos = imageFiles.map((filename) => ({
       transform: translateY(0);
     }
   }
+
+  /* Global keyframes for lightbox animations */
+  :global(@keyframes fadeIn) {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  :global(@keyframes fadeOut) {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0;
+    }
+  }
 </style>

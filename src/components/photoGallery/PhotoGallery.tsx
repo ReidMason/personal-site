@@ -1,4 +1,4 @@
-import { createSignal, createEffect, For } from "solid-js";
+import { createSignal, For } from "solid-js";
 import LightboxModal from "./LightboxModal";
 
 export interface Photo {
@@ -12,48 +12,11 @@ interface PhotoGalleryProps {
 
 export default function PhotoGallery(props: PhotoGalleryProps) {
   const [selectedImage, setSelectedImage] = createSignal<number | null>(null);
-  const [isLoading, setIsLoading] = createSignal(false);
 
-  // Keyboard navigation
-  createEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      const current = selectedImage();
-      if (current === null) return;
-
-      switch (e.key) {
-        case "Escape":
-          setSelectedImage(null);
-          break;
-        case "ArrowLeft":
-          e.preventDefault();
-          setSelectedImage(current > 0 ? current - 1 : props.photos.length - 1);
-          break;
-        case "ArrowRight":
-          e.preventDefault();
-          setSelectedImage(current < props.photos.length - 1 ? current + 1 : 0);
-          break;
-      }
-    };
-
-    if (selectedImage() !== null) {
-      document.addEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "hidden";
-    } else {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "auto";
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.body.style.overflow = "auto";
-    };
-  });
+  // Keyboard navigation is now handled in LightboxModal
 
   const openImage = (index: number) => {
-    setIsLoading(true);
     setSelectedImage(index);
-    // Simulate loading time for smooth transition
-    setTimeout(() => setIsLoading(false), 100);
   };
 
   return (
@@ -84,7 +47,11 @@ export default function PhotoGallery(props: PhotoGalleryProps) {
 
       {/* Lightbox Modal */}
       {selectedImage() !== null && (
-        <LightboxModal photos={props.photos} selectedImage={selectedImage} setSelectedImage={setSelectedImage} />
+        <LightboxModal
+          photos={props.photos}
+          selectedImage={selectedImage}
+          setSelectedImage={setSelectedImage}
+        />
       )}
     </>
   );

@@ -1,6 +1,6 @@
 import type { Accessor, JSX } from "solid-js";
 import type { Photo } from "./PhotoGallery";
-import { createSignal } from "solid-js";
+import { createSignal, createEffect } from "solid-js";
 
 interface LightboxModalProps {
   photos: Photo[];
@@ -13,20 +13,57 @@ export default function LightboxModal({
   selectedImage,
   setSelectedImage,
 }: LightboxModalProps) {
+  const [isClosing, setIsClosing] = createSignal(false);
+
+  // Keyboard navigation
+  createEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (isClosing()) return; // Don't handle keys during closing animation
+
+      switch (e.key) {
+        case "Escape":
+          closeImage();
+          break;
+        case "ArrowLeft":
+          e.preventDefault();
+          prevImage();
+          break;
+        case "ArrowRight":
+          e.preventDefault();
+          nextImage();
+          break;
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "auto";
+    };
+  });
+
   const closeImage = () => {
-    setSelectedImage(null);
+    if (isClosing()) return; // Prevent multiple close calls during animation
+    setIsClosing(true);
+    // Wait for animation to complete before actually closing
+    setTimeout(() => {
+      setSelectedImage(null);
+      setIsClosing(false);
+    }, 200); // Match the animation duration
   };
 
   const nextImage = () => {
     const current = selectedImage();
-    if (current !== null) {
+    if (current !== null && !isClosing()) {
       setSelectedImage(current < photos.length - 1 ? current + 1 : 0);
     }
   };
 
   const prevImage = () => {
     const current = selectedImage();
-    if (current !== null) {
+    if (current !== null && !isClosing()) {
       setSelectedImage(current > 0 ? current - 1 : photos.length - 1);
     }
   };
@@ -36,7 +73,9 @@ export default function LightboxModal({
       class="bg-opacity-90 fixed inset-0 z-50 flex items-center justify-center bg-black"
       onClick={closeImage}
       style={{
-        animation: "fadeIn 0.2s ease-out",
+        animation: isClosing()
+          ? "fadeOut 0.2s ease-out"
+          : "fadeIn 0.2s ease-out",
       }}
     >
       <div class="relative flex h-full w-full items-center justify-center p-4">
