@@ -16,7 +16,7 @@ const imageFiles = fs
   .filter((file) => {
     // Filter for common image extensions
     const ext = path.extname(file).toLowerCase();
-    return [".jpg", ".jpeg", ".png", ".webp", ".gif"].includes(ext);
+    return [".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"].includes(ext);
   })
   .sort(); // Sort alphabetically for consistent ordering
 
