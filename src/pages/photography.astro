@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PhotoGallery from "../components/photoGallery/PhotoGallery.tsx";
+import PhotoGallery from "../components/photoGallery/PhotoGallery.astro";
+import LightboxController from "../components/photoGallery/LightboxController";
 import fs from "fs";
 import path from "path";
 
@@ -33,7 +34,8 @@ const photos = imageFiles.map((filename) => ({
       Photography
     </h1>
 
-    <PhotoGallery photos={photos} client:load />
+    <PhotoGallery photos={photos} />
+    <LightboxController photos={photos} client:load />
   </div>
 </Layout>
 

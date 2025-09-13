@@ -1,0 +1,42 @@
+---
+import { Image } from "astro:assets";
+
+export interface Photo {
+  filename: string;
+  src: string;
+}
+
+interface Props {
+  photos: Photo[];
+}
+
+const { photos } = Astro.props;
+
+const cloudflarePrefix = "/cdn-cgi/image/width=500,quality=80";
+
+const getImageSrc = (src: string) => {
+  const isProduction = import.meta.env.PROD;
+  return isProduction ? `${cloudflarePrefix}${src}` : src;
+};
+---
+
+<!-- Static image gallery using Astro list rendering -->
+<div class="columns-1 gap-6 md:columns-2 lg:columns-3" id="photo-gallery">
+  {
+    photos.map((photo, index) => (
+      <div class="group relative mb-6 break-inside-avoid overflow-hidden rounded-lg bg-gray-800 shadow-lg transition-transform duration-300 hover:scale-103">
+        <Image
+          src={getImageSrc(photo.src)}
+          alt="Photography"
+          class="gallery-image block w-full cursor-pointer object-cover transition-opacity duration-300 group-hover:opacity-90"
+          width={500}
+          height={500}
+          loading="lazy"
+          data-index={index}
+          data-src={photo.src}
+          data-filename={photo.filename}
+        />
+      </div>
+    ))
+  }
+</div>
