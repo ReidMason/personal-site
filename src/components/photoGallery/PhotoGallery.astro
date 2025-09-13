@@ -32,6 +32,7 @@ const getImageSrc = (src: string) => {
           width={500}
           height={500}
           loading={index < 6 ? "eager" : "lazy"}
+          fetchpriority={index < 6 ? "high" : "low"}
           decoding="async"
           data-index={index}
           data-src={photo.src}
