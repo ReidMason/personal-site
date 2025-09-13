@@ -10,6 +10,17 @@ interface PhotoGalleryProps {
   photos: Photo[];
 }
 
+const cloudflarePrefix = "/cdn-cgi/image/width=500,quality=80";
+
+const getImageSrc = (src: string) => {
+  const isLocalhost =
+    typeof window !== "undefined" &&
+    (window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1");
+
+  return isLocalhost ? src : `${cloudflarePrefix}${src}`;
+};
+
 export default function PhotoGallery(props: PhotoGalleryProps) {
   const [selectedImage, setSelectedImage] = createSignal<number | null>(null);
 
@@ -24,7 +35,7 @@ export default function PhotoGallery(props: PhotoGalleryProps) {
           {(photo, index) => (
             <div class="group relative mb-6 break-inside-avoid overflow-hidden rounded-lg bg-gray-800 shadow-lg transition-transform duration-300 hover:scale-103">
               <img
-                src={photo.src}
+                src={getImageSrc(photo.src)}
                 alt="Photography"
                 class="block w-full cursor-pointer object-cover transition-opacity duration-300 group-hover:opacity-90"
                 loading="lazy"

@@ -8,6 +8,17 @@ interface LightboxModalProps {
   setSelectedImage: (index: number | null) => void;
 }
 
+const getImageSrc = (src: string) => {
+  const isLocalhost =
+    typeof window !== "undefined" &&
+    (window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1");
+
+  // For lightbox, use higher quality settings or no optimization
+  const cloudflarePrefix = "/cdn-cgi/image/width=1200,quality=90";
+  return isLocalhost ? src : `${cloudflarePrefix}${src}`;
+};
+
 export default function LightboxModal({
   photos,
   selectedImage,
@@ -85,7 +96,7 @@ export default function LightboxModal({
       <div class="relative flex h-full w-full items-center justify-center p-4">
         {/* Main image */}
         <img
-          src={photos[selectedImage()!].src}
+          src={getImageSrc(photos[selectedImage()!].src)}
           alt="Photography"
           class="max-h-full max-w-full object-contain transition-opacity duration-200"
           onClick={(e) => e.stopPropagation()}
