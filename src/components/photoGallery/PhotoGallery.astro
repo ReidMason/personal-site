@@ -31,7 +31,8 @@ const getImageSrc = (src: string) => {
           class="gallery-image block w-full cursor-pointer object-cover transition-opacity duration-300 group-hover:opacity-90"
           width={500}
           height={500}
-          loading="lazy"
+          loading={index < 6 ? "eager" : "lazy"}
+          decoding="async"
           data-index={index}
           data-src={photo.src}
           data-filename={photo.filename}

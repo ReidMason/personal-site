@@ -1,5 +1,5 @@
 import type { Accessor, JSX } from "solid-js";
-import type { Photo } from "./PhotoGallery";
+import type { Photo } from "./PhotoGallery.astro";
 import { createSignal, createEffect, onCleanup } from "solid-js";
 
 interface LightboxModalProps {

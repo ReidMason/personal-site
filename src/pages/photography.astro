@@ -35,7 +35,7 @@ const photos = imageFiles.map((filename) => ({
     </h1>
 
     <PhotoGallery photos={photos} />
-    <LightboxController photos={photos} client:load />
+    <LightboxController photos={photos} client:idle />
   </div>
 </Layout>
 
